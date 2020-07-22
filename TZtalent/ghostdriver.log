@@ -1,0 +1,10 @@
+PhantomJS is launching GhostDriver...
+[INFO  - 2020-07-22T01:50:27.722Z] GhostDriver - Main - running on port 51795
+[INFO  - 2020-07-22T01:50:30.351Z] Session [b921d0c0-cbbd-11ea-ae9a-a19bd7c3f191] - _decorateNewWindow - page.settings: {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.2 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2020-07-22T01:50:30.351Z] Session [b921d0c0-cbbd-11ea-ae9a-a19bd7c3f191] - page.customHeaders:  - {}
+[INFO  - 2020-07-22T01:50:30.351Z] Session [b921d0c0-cbbd-11ea-ae9a-a19bd7c3f191] - CONSTRUCTOR - Desired Capabilities: {"browserName":"phantomjs","version":"","platform":"ANY","javascriptEnabled":true}
+[INFO  - 2020-07-22T01:50:30.351Z] Session [b921d0c0-cbbd-11ea-ae9a-a19bd7c3f191] - CONSTRUCTOR - Negotiated Capabilities: {"browserName":"phantomjs","version":"1.9.2","driverName":"ghostdriver","driverVersion":"1.0.4","platform":"windows-8-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2020-07-22T01:50:30.351Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: b921d0c0-cbbd-11ea-ae9a-a19bd7c3f191
+[INFO  - 2020-07-22T01:55:27.732Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2020-07-22T01:55:27.733Z] SessionManagerReqHand - _cleanupWindowlessSessions - Deleted Session 'b921d0c0-cbbd-11ea-ae9a-a19bd7c3f191', because windowless
+:53:15.153Z] SessionManagerReqHand - _cleanupWindowlessSessions - Deleted Session '6a1d3d20-cbbd-11ea-998c-8f4eb426cc44', because windowless
