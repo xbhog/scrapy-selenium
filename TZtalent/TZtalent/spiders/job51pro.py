@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from selenium import  webdriver
+from selenium.webdriver import  ActionChains
 import sys
 sys.path.append('..')
 import db
+from TZtalent.items import TztalentItem
 from pypinyin import lazy_pinyin
+import time
+from lxml import etree
 
 class Job51proSpider(scrapy.Spider):
     name = 'job51pro'
-    # allowed_domains = ['www.xxx.com']
-    # start_urls = ['http://www.xxx.com/']
+
     def __init__(self,table_name,keyword,webhook,site,*args,**kwargs):
         super(Job51proSpider, self).__init__(*args,**kwargs)
         # 防止selenium识别
@@ -27,18 +30,45 @@ class Job51proSpider(scrapy.Spider):
           """
         })
         #https://nj.58.com/job/?key=%E5%A4%96%E8%B4%B8&classpolicy=main_null,job_A&final=1&jump=1
+        self.keyword = keyword
         self.webhook_url = webhook
         self.mydb = db.MydbOperator(table_name)
         self.mydb.create_table()
         self.isInitialize = self.mydb.is_empty_table()
-        print(self.isInitialize)
-
         # 中文转拼音
         pinyin = lazy_pinyin(site)
-        print(pinyin)
+        # print(pinyin)
         self.site = pinyin[0] + pinyin[1]
-        # self.start_urls =[f'https://{self.site}.58.com/job/?key={keyword}&classpolicy=main_null,job_A&final=1&jump=1']
-        self.start_urls = [
-            'https://search.51job.com/list/070500,000000,0000,00,2,99,%25E5%25A4%2596%25E8%25B4%25B8,2,1.html?lang=c&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&ord_field=1&dibiaoid=0&line=&welfare=']
+        self.start_urls = [f"https://www.51job.com/{self.site}/"]
+
+
     def parse(self, response):
-        pass
+        time.sleep(2)
+        #找到文本框
+        self.driver.find_element_by_id("kwdselectid").send_keys(self.keyword)
+        # 鼠标移动到点击位置
+        ac = self.driver.find_element_by_xpath('//*[@id="supp"]/div[1]/div/div[1]/button')
+        ActionChains(self.driver).move_to_element(ac).click(ac).perform()
+        time.sleep(2)
+        # 解析selenium发过来的response数据
+        str_html = self.driver.page_source
+        html = etree.HTML(str_html)
+        #找到数据的父标签
+        div_list = html.xpath("//*[@class='dw_table']/div")
+        for div in div_list:
+            item = TztalentItem()
+            title = div.xpath(".//p/span/a/@title")
+            #返回前三个数据是[],如果使用的extract_first返回的是None
+            if title == []:
+                continue
+            item["title"] = title[0]
+            item['company_name'] = div.xpath(".//span[@class='t2']//a/text()")[0]
+            item['company_url'] = div.xpath(".//span[@class='t2']/a/@href")[0]
+            item['site'] = div.xpath(".//span[@class='t3']/text()")[0]
+
+            # print(item)
+            yield item
+
+
+    def close_spider(self,spider):
+        self.driver.quit()
