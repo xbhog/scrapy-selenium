@@ -57,10 +57,11 @@ class A58jobproSpider(scrapy.Spider):
             #公司的url
             comapny_url = li.xpath(".//div[@class='comp_name']/a/@href").extract_first()
             item['title'] = title
-            item['company_name'] = comapny_name
+            item['company_name'] = comapny_name.split(" ")[1]
             item['company_url'] = comapny_url
             item['site'] = site
-            print(title,comapny_name,comapny_url,site)
+            # print(title,comapny_name,comapny_url,site)
+            # print(item)
             yield item
 
     def spider_close(self,spider):
